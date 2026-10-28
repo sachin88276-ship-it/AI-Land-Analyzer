@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Comparison | AI Land Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#06152f;color:#fff}
+nav{background:#092b58;padding:20px 6%;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+nav a{color:#35e5ff;text-decoration:none}
+main{max-width:1000px;margin:35px auto;padding:20px}
+h1,h2{color:#35e5ff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:linear-gradient(145deg,#104f91,#092d5c);padding:22px;border-radius:14px;border:1px solid #167ab5}
+label{display:block;margin-top:14px}
+input{width:100%;padding:12px;margin-top:7px;border-radius:7px;border:1px solid #2784b9;background:#061d3b;color:white}
+button{margin-top:22px;padding:14px;width:100%;border:0;border-radius:8px;background:#12cfe8;color:#002344;font-weight:bold;cursor:pointer}
+.result{margin-top:25px;padding:20px;background:#0b2850;border-radius:12px}
+small{color:#b9d7ef}
+</style>
+</head>
+<body>
+<nav>
+<strong>🔷 AI LAND ANALYZER</strong>
+<a href="/dashboard">← Back to Dashboard</a>
+</nav>
+<main>
+<h1>Property Comparison</h1>
+<p>Compare two properties using their area and expected price.</p>
+
+<form method="POST" action="/compare">
+<div class="cards">
+<section class="card">
+<h2>Property A</h2>
+<label>Location</label>
+<input name="location_a" required placeholder="e.g. Chembur">
+<label>Area (sq ft)</label>
+<input name="area_a" type="number" min="1" step="any" required>
+<label>Expected Price (₹)</label>
+<input name="price_a" type="number" min="0" step="any" required>
+</section>
+
+<section class="card">
+<h2>Property B</h2>
+<label>Location</label>
+<input name="location_b" required placeholder="e.g. Kharghar">
+<label>Area (sq ft)</label>
+<input name="area_b" type="number" min="1" step="any" required>
+<label>Expected Price (₹)</label>
+<input name="price_b" type="number" min="0" step="any" required>
+</section>
+</div>
+<button type="submit">Compare Properties</button>
+</form>
+
+{% if result %}
+<section class="result">
+<h2>Comparison Result</h2>
+<div class="cards">
+<div class="card">
+<h3>{{ result.location_a }}</h3>
+<p>Area: {{ result.area_a }} sq ft</p>
+<p>Price: ₹{{ result.price_a }}</p>
+<p>Price per sq ft: ₹{{ "%.2f"|format(result.rate_a) }}</p>
+</div>
+<div class="card">
+<h3>{{ result.location_b }}</h3>
+<p>Area: {{ result.area_b }} sq ft</p>
+<p>Price: ₹{{ result.price_b }}</p>
+<p>Price per sq ft: ₹{{ "%.2f"|format(result.rate_b) }}</p>
+</div>
+</div>
+<p><strong>{{ result.message }}</strong></p>
+<small>This comparison uses the prices you entered. It does not verify market value or legal status.</small>
+</section>
+{% endif %}
+</main>
+</body>
+</html>

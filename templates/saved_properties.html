@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saved Properties | AI Land Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07152f;color:#f4f8ff;font-family:Arial,sans-serif}
+header{padding:18px 5%;background:#092858;border-bottom:1px solid #087fc2}
+a{color:#52e9f5;text-decoration:none}
+main{width:min(100% - 28px,900px);margin:30px auto}
+h1,h2{color:#38dbea}
+.card{background:linear-gradient(135deg,#075da5,#087fc2);padding:22px;border-radius:15px;margin:18px 0}
+input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #3aa9dc;background:#08264c;color:white;font-size:16px}
+button{padding:12px 16px;border:0;border-radius:8px;background:#08d5e5;color:#062344;font-weight:bold;cursor:pointer}
+.property{background:#08264c;border:1px solid #168dc4;border-radius:10px;padding:15px;margin-top:12px;overflow-wrap:anywhere}
+.delete{background:#e45b65;color:white;margin-top:10px}
+.note{color:#d4e5f8;line-height:1.5}
+</style>
+</head>
+<body>
+<header><a href="/dashboard">◆ AI LAND ANALYZER</a></header>
+<main>
+<h1>Saved Properties</h1>
+<p class="note">Save property details in this browser so you can review them later.</p>
+
+<section class="card">
+<h2>Add a Property</h2>
+<form id="propertyForm">
+<label for="location">Location</label>
+<input id="location" required placeholder="e.g. Chembur">
+<label for="area">Land Area (sq ft)</label>
+<input id="area" type="number" min="1" required placeholder="e.g. 1000">
+<label for="price">Expected Price (₹)</label>
+<input id="price" type="number" min="1" required placeholder="e.g. 5000000">
+<button type="submit">Save Property</button>
+</form>
+</section>
+
+<section class="card">
+<h2>Your Saved List</h2>
+<div id="savedList"><p class="note">No properties saved yet.</p></div>
+</section>
+<p class="note">Saved items stay in this browser on this device. They are not synced to an account or other devices.</p>
+</main>
+<script>
+const form=document.getElementById("propertyForm");
+const list=document.getElementById("savedList");
+let properties=[];
+try{properties=JSON.parse(localStorage.getItem("landAnalyzerSaved")||"[]");if(!Array.isArray(properties))properties=[];}catch(e){properties=[];}
+
+function renderProperties(){
+ list.replaceChildren();
+ if(properties.length===0){const p=document.createElement("p");p.className="note";p.textContent="No properties saved yet.";list.appendChild(p);return;}
+ properties.forEach((item,index)=>{
+  const card=document.createElement("div");card.className="property";
+  const title=document.createElement("h3");title.textContent=item.location;
+  const details=document.createElement("p");details.textContent="Area: "+item.area+" sq ft | Price: ₹"+Number(item.price).toLocaleString("en-IN")+" | Price/sq ft: ₹"+(Number(item.price)/Number(item.area)).toLocaleString("en-IN",{maximumFractionDigits:2});
+  const remove=document.createElement("button");remove.className="delete";remove.textContent="Remove";
+  remove.addEventListener("click",()=>{properties.splice(index,1);saveProperties();});
+  card.append(title,details,remove);list.appendChild(card);
+ });
+}
+function saveProperties(){try{localStorage.setItem("landAnalyzerSaved",JSON.stringify(properties));renderProperties();}catch(e){alert("Could not save in this browser.");}}
+form.addEventListener("submit",event=>{
+ event.preventDefault();
+ const location=document.getElementById("location").value.trim();
+ const area=Number(document.getElementById("area").value);
+ const price=Number(document.getElementById("price").value);
+ if(!location||area<=0||price<=0){alert("Enter valid property details.");return;}
+ properties.push({location,area,price});
+ saveProperties();form.reset();
+});
+renderProperties();
+</script>
+</body>
+</html>

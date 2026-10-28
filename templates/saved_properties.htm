@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Properties | AI Land Analyzer</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #03152f;
+            color: white;
+        }
+
+        nav {
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #12385f;
+        }
+
+        .logo { font-weight: bold; }
+        .logo span { color: #19d9ff; }
+        a { color: #bdeaff; text-decoration: none; }
+
+        main {
+            width: min(100% - 32px, 950px);
+            margin: 28px auto;
+        }
+
+        h1 { color: #21d9ff; }
+
+        .intro {
+            color: #bdd8f4;
+            line-height: 1.6;
+        }
+
+        .property {
+            margin-top: 18px;
+            padding: 22px;
+            border: 1px solid #0869ac;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #074783, #05264f);
+        }
+
+        .property h2 {
+            margin-top: 0;
+            color: #21d9ff;
+            overflow-wrap: anywhere;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .detail {
+            padding: 13px;
+            border-radius: 8px;
+            background: #03152f;
+            overflow-wrap: anywhere;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 7px;
+            color: #a9c9e7;
+            font-size: 13px;
+        }
+
+        .value { font-weight: bold; }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 16px;
+            margin-top: 16px;
+            border: 0;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #05c6f7, #0787ff);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .delete { background: #c93650; }
+
+        .empty {
+            margin-top: 22px;
+            padding: 24px;
+            border: 1px solid #0869ac;
+            border-radius: 12px;
+            background: #05264f;
+        }
+
+        .message {
+            color: #9df5c7;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 520px) {
+            nav { padding: 16px; }
+            .details { grid-template-columns: 1fr; }
+            .property { padding: 17px; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo"><span>🌐</span> AI Land Analyzer</div>
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            &nbsp; | &nbsp;
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>💾 Saved Properties</h1>
+        <p class="intro">
+            Your saved land properties are listed below.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% if properties %}
+            {% for property in properties %}
+                <section class="property">
+                    <h2>📍 {{ property.location or "Location not provided" }}</h2>
+
+                    <div class="details">
+                        <div class="detail">
+                            <span class="label">Land Area</span>
+                            <span class="value">{{ property.area }} {{ property.unit }}</span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="label">Land Type</span>
+                            <span class="value">{{ property.land_type or "Not provided" }}</span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="label">Expected Price</span>
+                            <span class="value">₹{{ property.budget }}</span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="label">Price Per Square Foot</span>
+                            <span class="value">
+                                {% if property.price_per_sqft is not none %}
+                                    ₹{{ property.price_per_sqft }}
+                                {% else %}
+                                    Not available
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="label">Purpose</span>
+                            <span class="value">{{ property.purpose or "Not provided" }}</span>
+                        </div>
+
+                        <div class="detail">
+                            <span class="label">Additional Details</span>
+                            <span class="value">{{ property.details or "Not provided" }}</span>
+                        </div>
+                    </div>
+
+                    <form method="POST"
+                          action="{{ url_for('delete_saved_property', property_id=property.id) }}"
+                          onsubmit="return confirm('Delete this saved property?');">
+                        <button type="submit" class="btn delete">
+                            🗑 Delete Property
+                        </button>
+                    </form>
+                </section>
+            {% endfor %}
+        {% else %}
+            <section class="empty">
+                <h2>No saved properties yet</h2>
+                <p class="intro">
+                    Analyze a property and click Save Property to add it here.
+                </p>
+                <a class="btn" href="/analyzer">Analyze Land →</a>
+            </section>
+        {% endif %}
+
+        <p style="margin-top: 24px;">
+            <a href="/dashboard">← Back to Dashboard</a>
+        </p>
+    </main>
+</body>
+</html>

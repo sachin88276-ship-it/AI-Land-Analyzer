@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Calculator | AI Land Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#06152f;color:#f2f8ff;font-family:Arial,sans-serif;min-height:100vh}
+header{background:#082b59;padding:20px 6%;border-bottom:1px solid #087eae;color:#45eaff;font-weight:bold}
+main{width:min(850px,92%);margin:35px auto}
+h1,h2{color:#35e7f5}
+.card{background:#0c3267;border:1px solid #147fba;border-radius:16px;padding:24px;margin-top:20px}
+label{display:block;margin:16px 0 8px;font-weight:bold}
+input{width:100%;padding:13px;border:1px solid #3988b8;border-radius:8px;background:#061b3b;color:white;font-size:16px}
+button,.btn{display:block;width:100%;padding:14px;margin-top:22px;background:#08d5e8;color:#052345;border:0;border-radius:9px;font-size:16px;font-weight:bold;text-align:center;text-decoration:none;cursor:pointer}
+.result{background:#062448;border-radius:10px;padding:18px;margin-top:20px;line-height:1.8}
+.note{color:#b9d8ed;font-size:14px}
+@media(max-width:600px){main{margin:20px auto}.card{padding:17px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>AI LAND ANALYZER</header>
+<main>
+<h1>Budget Calculator</h1>
+<p>Estimate the total cost of buying a property.</p>
+
+<section class="card">
+<form method="POST" action="/budget">
+<label for="budget_amount">Your Total Budget (₹)</label>
+<input id="budget_amount" name="budget_amount" type="number" min="0" step="any" required placeholder="e.g. 6000000">
+
+<label for="land_price">Land Price (₹)</label>
+<input id="land_price" name="land_price" type="number" min="0" step="any" required placeholder="e.g. 5000000">
+
+<label for="extra_cost">Extra Costs (₹)</label>
+<input id="extra_cost" name="extra_cost" type="number" min="0" step="any" value="0" required placeholder="Registration, legal fees etc.">
+
+<button type="submit">Calculate My Budget</button>
+</form>
+
+{% if result %}
+<div class="result">
+{% if result.error %}
+<h2>{{ result.error }}</h2>
+{% else %}
+<h2>Budget Summary</h2>
+<p>Total Budget: ₹{{ "%.2f"|format(result.budget) }}</p>
+<p>Total Estimated Cost: ₹{{ "%.2f"|format(result.total_cost) }}</p>
+{% if result.difference >= 0 %}
+<p style="color:#52f5bd">Money Remaining: ₹{{ "%.2f"|format(result.difference) }}</p>
+{% else %}
+<p style="color:#ffb2b2">Additional Money Needed: ₹{{ "%.2f"|format(-result.difference) }}</p>
+{% endif %}
+{% endif %}
+</div>
+{% endif %}
+<p class="note">This is an estimate. Actual registration, tax and legal costs may vary.</p>
+</section>
+
+<a class="btn" href="/dashboard">Back to Dashboard</a>
+</main>
+</body>
+</html>

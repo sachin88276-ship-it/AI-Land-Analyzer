@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Land Analysis Report</title>
+    
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin:20px 0;">
+    <button type="button" onclick="window.print()"
+        style="padding:13px 20px;border:0;border-radius:9px;
+        background:#08d5e5;color:#062344;font-weight:bold;cursor:pointer;">
+        📄 Download / Save as PDF
+    </button>
+    <a href="/dashboard"
+        style="padding:13px 20px;border-radius:9px;
+        background:#087fc2;color:white;text-decoration:none;font-weight:bold;">
+        Back to Dashboard
+    </a>
+</div>
+
+<style>
+@media print {
+    button, a { display:none !important; }
+    body { background:white !important; color:#111 !important; }
+    * { box-shadow:none !important; }
+    .card, section { break-inside:avoid; }
+}
+</style>
+
+
+
+<style>
+@media print {
+    button, a { display:none !important; }
+    body { background:white !important; color:#111 !important; }
+    * { box-shadow:none !important; }
+    .card, section { break-inside:avoid; }
+}
+</style>
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #071426;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #0c1d33;
+            border-bottom: 1px solid #1b4967;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: #38d9f5;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        a {
+            color: #38d9f5;
+            text-decoration: none;
+        }
+
+        main {
+            width: min(1000px, 92%);
+            margin: 35px auto;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #38d9f5;
+            font-size: clamp(26px, 5vw, 36px);
+            margin-bottom: 10px;
+        }
+
+        .muted {
+            color: #b5c5d8;
+            line-height: 1.7;
+        }
+
+        .card {
+            background: #0c1d33;
+            border: 1px solid #1b4967;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #38d9f5;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .metric {
+            background: #071426;
+            border: 1px solid #203d56;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .metric-label {
+            color: #9fb3c9;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #38d9f5;
+            color: #38d9f5;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            padding-left: 22px;
+            color: #d6e3f1;
+            line-height: 1.9;
+        }
+
+        .notice {
+            border-left: 3px solid #38d9f5;
+            padding: 12px 15px;
+            background: #071426;
+            color: #b5c5d8;
+            line-height: 1.7;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 22px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 18px;
+            border-radius: 8px;
+            background: #25c7e8;
+            color: #071426;
+            font-weight: bold;
+        }
+
+        .secondary {
+            background: transparent;
+            color: #38d9f5;
+            border: 1px solid #38d9f5;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">AI LAND ANALYZER</div>
+        <a href="/dashboard">← Dashboard</a>
+    </header>
+
+    <main>
+        <div class="heading">
+            <span class="tag">PROPERTY REPORT</span>
+            <h1>AI Land Analysis Report</h1>
+            <p class="muted">
+                Review the submitted property details and the key factors
+                to investigate before making a land decision.
+            </p>
+        </div>
+
+        <section class="card">
+            <h2>Property Summary</h2>
+
+            <div class="grid">
+                <div class="metric">
+                    <div class="metric-label">Location</div>
+                    <div class="metric-value">
+                        {{ land.location or "Not provided" }}
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">Land Area</div>
+                    <div class="metric-value">
+                        {{ land.area }} {{ land.unit }}
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">Land Type</div>
+                    <div class="metric-value">
+                        {{ land.land_type or "Not provided" }}
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">Expected Price</div>
+                    <div class="metric-value">
+                        {% if land.budget %}
+                            ₹{{ land.budget }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </div>
+                </div>
+                
+<div class="metric">
+    <div class="metric-label">Price Per Square Foot</div>
+    <div class="metric-value">
+        {% if land.price_per_sqft %}
+            ₹{{ land.price_per_sqft }}
+        {% else %}
+            Not available
+        {% endif %}
+    </div>
+</div>
+
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Suitability Assessment</h2>
+            <p class="muted">
+                Suitability depends on the intended use, local zoning rules,
+                access roads, utilities, soil conditions and legal status.
+            </p>
+            <br>
+            <ul>
+                <li>Verify that the land's permitted use matches your purpose.</li>
+                <li>Check road access, water supply, electricity and drainage.</li>
+                <li>Review nearby facilities and transport connectivity.</li>
+                <li>Confirm title documents and any restrictions before purchase.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Investment Risk Checklist</h2>
+            <ul>
+                <li>Ownership or title disputes</li>
+                <li>Unverified market price or unclear property boundaries</li>
+                <li>Flooding, environmental or access-related concerns</li>
+                <li>Local planning restrictions and future development limits</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>AI Analysis Status</h2>
+            <p class="notice">
+                This is a preliminary, rule-based report template.
+                A trained AI model, verified local market data, and map
+                integration have not yet been connected. No land price,
+                suitability score or investment return is being predicted yet.
+            </p>
+        </section>
+
+        <div class="buttons">
+            <a class="btn" href="/analyzer">Analyze Another Property</a>
+            <a class="btn secondary" href="/dashboard">Back to Dashboard</a>
+        </div>
+        
+
+
+    </main>
+</body>
+</html>

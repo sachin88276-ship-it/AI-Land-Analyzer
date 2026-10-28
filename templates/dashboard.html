@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Land Analyzer</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            font-family: Arial, sans-serif;
+            background: #03152f;
+            color: white;
+        }
+
+        nav {
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #12385f;
+        }
+
+        .logo { font-weight: bold; }
+        .logo span { color: #19d9ff; }
+
+        a {
+            color: #bdeaff;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .logout {
+            background: #e64b61;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        main {
+            width: min(100% - 32px, 1000px);
+            margin: 28px auto;
+        }
+
+        h1 { font-size: clamp(25px, 5vw, 36px); }
+
+        .intro {
+            color: #bdd8f4;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #21d9ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .card {
+            min-width: 0;
+            padding: 20px;
+            border: 1px solid #0869ac;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #074783, #05264f);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            color: #21d9ff;
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #d0e2f5;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            padding: 13px 10px;
+            margin-top: 18px;
+            border-radius: 9px;
+            background: linear-gradient(90deg, #05c6f7, #0787ff);
+            color: white;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .history {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #0869ac;
+            border-radius: 14px;
+            background: #05264f;
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 550px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 10px;
+            border-bottom: 1px solid #245078;
+        }
+
+        th { color: #21d9ff; }
+
+        @media (max-width: 800px) {
+            .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 520px) {
+            nav { padding: 16px; }
+            .nav-right { gap: 10px; }
+            main { margin: 20px auto; }
+            .grid { grid-template-columns: 1fr; gap: 12px; }
+            .card, .history { padding: 17px; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo"><span>🌐</span> AI Land Analyzer</div>
+
+        <div class="nav-right">
+            <a href="/">Home</a>
+            <span>👤 {{ session.get('username', 'User') }}</span>
+            <a class="logout" href="{{ url_for('logout') }}">Logout ↗</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Welcome, {{ session.get('username', 'User') }}!</h1>
+
+        <p class="intro">
+            Analyze land suitability, compare properties, calculate your
+            budget and manage your saved land records.
+        </p>
+
+        <h2 class="section-title">Land Analysis Tools</h2>
+
+        <section class="grid">
+            <article class="card">
+                <h2>📍 Analyze Land</h2>
+                <p>Enter land details and view the analysis results.</p>
+                <a class="btn" href="/analyzer">Open Land Analyzer →</a>
+            </article>
+
+            <article class="card">
+                <h2>⚖️ Compare Properties</h2>
+                <p>Compare different land options before deciding.</p>
+                <a class="btn" href="/compare">Compare Properties →</a>
+            </article>
+
+            <article class="card">
+                <h2>💰 Budget Calculator</h2>
+                <p>Estimate land costs and check your available budget.</p>
+                <a class="btn" href="/budget">Open Calculator →</a>
+            </article>
+
+            <article class="card">
+                <h2>📄 Document Checklist</h2>
+                <p>Review important documents to verify before buying land.</p>
+                <a class="btn" href="/documents">Check Documents →</a>
+            </article>
+
+            <article class="card">
+                <h2>📊 Land Price Charts</h2>
+                <p>Explore sample prices and calculate price per square foot.</p>
+                <a class="btn" href="/price-charts">Open Price Charts →</a>
+            </article>
+
+            <article class="card">
+                <h2>💾 Saved Properties</h2>
+                <p>View properties saved in this browser.</p>
+                <a class="btn" href="/saved-properties">View Saved Properties →</a>
+            </article>
+
+            <!-- NEW AI CHATBOT CARD -->
+            <article class="card">
+                <h2>🤖 AI Property Assistant</h2>
+                <p>Ask questions about land, property prices, budgets and buying documents.</p>
+                <a class="btn" href="http://127.0.0.1:5000/chatbot">Chat with AI →</a>
+            </article>
+        </section>
+
+        <section class="history">
+            <h2 class="section-title" style="margin-top: 0;">
+                Recent Land Analyses
+            </h2>
+
+            {% if records %}
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Area</th>
+                                <th>Land Type</th>
+                                <th>Expected Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td>{{ record.location }}</td>
+                                <td>{{ record.area }} {{ record.unit }}</td>
+                                <td>{{ record.land_type }}</td>
+                                <td>₹{{ record.budget }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="intro">
+                    Abhi koi saved analysis nahi hai. Pehli property analyze
+                    karne ke baad records yahan dikh sakte hain.
+                </p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

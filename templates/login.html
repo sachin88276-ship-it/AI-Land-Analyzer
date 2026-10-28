@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | AI Land Analyzer</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            font-family: Arial, sans-serif;
+            color: white;
+            background: radial-gradient(ellipse at top, #07549b, #03152f 70%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo { font-size: 19px; font-weight: bold; }
+        .logo span { color: #19d9ff; }
+
+        .back {
+            color: #cceaff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 390px;
+            padding: 32px 24px;
+            text-align: center;
+            background: linear-gradient(145deg, #073d76, #05234a);
+            border: 1px solid #0879c8;
+            border-radius: 16px;
+            box-shadow: 0 18px 50px #0003;
+        }
+
+        .symbol { font-size: 32px; }
+        h1 { margin: 12px 0 8px; font-size: 30px; }
+        .subtitle { color: #bdd8f4; margin-bottom: 26px; }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 16px 0 7px;
+            font-size: 13px;
+            color: #8deaff;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            color: white;
+            background: #06284e;
+            border: 1px solid #0879c8;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #16c9ff;
+            outline-offset: 2px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 22px;
+            border: 0;
+            border-radius: 8px;
+            color: white;
+            background: linear-gradient(90deg, #05c6f7, #0787ff);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .note { color: #a9c9e8; font-size: 12px; margin-top: 20px; }
+
+        @media (max-width: 480px) {
+            nav { padding: 16px; }
+            .card { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo"><span>🌐</span> AI Land Analyzer</div>
+        <a class="back" href="/">Home</a>
+    </nav>
+
+    <main>
+        <section class="card">
+            <div class="symbol">🌐</div>
+            <h1>Welcome</h1>
+            <p class="subtitle">Login to continue</p>
+
+            <form action="/login" method="post">
+                <label for="username">Email or Username</label>
+                <input id="username" name="username"
+                       placeholder="Enter your email or username"
+                       autocomplete="username" required>
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password"
+                       placeholder="Enter your password"
+                       autocomplete="current-password" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="note">Secure your land decisions with AI insights.</p>
+        </section>
+    </main>
+</body>
+</html>

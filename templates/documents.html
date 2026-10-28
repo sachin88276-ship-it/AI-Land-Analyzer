@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Checklist | AI Land Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#06152f;color:#f2f8ff;font-family:Arial,sans-serif}
+header{background:#082b59;padding:20px 6%;color:#45eaff;font-weight:bold;border-bottom:1px solid #087eae}
+main{width:min(850px,92%);margin:32px auto}
+h1,h2{color:#35e7f5}
+.card{background:#0c3267;border:1px solid #147fba;border-radius:16px;padding:24px;margin-top:20px}
+.item{display:flex;gap:12px;align-items:flex-start;background:#08264d;padding:14px;margin:10px 0;border-radius:9px}
+.item input{width:20px;height:20px;accent-color:#08d5e8;flex-shrink:0}
+.item span{line-height:1.5}
+button,.btn{display:block;width:100%;padding:14px;margin-top:18px;background:#08d5e8;color:#052345;border:0;border-radius:9px;font-size:16px;font-weight:bold;text-align:center;text-decoration:none;cursor:pointer}
+.progress{color:#52f5bd;font-weight:bold;margin-top:16px}
+.note{color:#b9d8ed;font-size:14px;line-height:1.6}
+@media(max-width:600px){main{margin:20px auto}.card{padding:16px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>AI LAND ANALYZER</header>
+<main>
+<h1>Land Document Checklist</h1>
+<p>Use this checklist to prepare for property verification.</p>
+
+<section class="card">
+<h2>Documents to Check</h2>
+<p class="note">Tick each item after you have checked it. A tick does not mean the document is legally valid.</p>
+
+{% for item in checklist %}
+<label class="item">
+<input type="checkbox" class="doc-check">
+<span>{{ item }}</span>
+</label>
+{% endfor %}
+
+<p class="progress" id="progress">0 documents checked</p>
+<button type="button" onclick="updateProgress()">Update Progress</button>
+</section>
+
+<section class="card">
+<h2>Important Reminder</h2>
+<p class="note">Document requirements depend on the property location and type. Verify ownership, title, encumbrances, permitted land use and applicable local records with a qualified property lawyer before purchasing.</p>
+</section>
+
+<a class="btn" href="/dashboard">Back to Dashboard</a>
+</main>
+
+<script>
+function updateProgress(){
+  const boxes = document.querySelectorAll(".doc-check");
+  const checked = document.querySelectorAll(".doc-check:checked").length;
+  document.getElementById("progress").textContent =
+    checked + " of " + boxes.length + " documents checked";
+}
+</script>
+</body>
+</html>

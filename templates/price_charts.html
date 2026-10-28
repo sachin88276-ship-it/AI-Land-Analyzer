@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land Price Charts | AI Land Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#07152f;color:#f4f8ff}
+header{padding:18px 5%;background:#092858;border-bottom:1px solid #087fc2}
+header a{color:#52e9f5;text-decoration:none;font-weight:bold}
+main{width:min(100% - 28px,950px);margin:30px auto}
+h1,h2{color:#38dbea}
+p{color:#d4e5f8;line-height:1.6}
+.card{background:linear-gradient(135deg,#075da5,#087fc2);padding:22px;border-radius:16px;margin:18px 0}
+label{display:block;margin:14px 0 7px}
+input,select{width:100%;padding:13px;border-radius:8px;border:1px solid #3aa9dc;background:#08264c;color:white;font-size:16px}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:#08d5e5;color:#062344;font-weight:bold;font-size:16px;margin-top:18px;cursor:pointer}
+.chart{height:230px;display:flex;align-items:end;justify-content:space-around;gap:12px;padding:20px 8px 0;border-bottom:2px solid #8bdcf4}
+.bar-wrap{height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:8px}
+.bar{width:min(65%,65px);background:linear-gradient(#20f1e8,#0784e8);border-radius:8px 8px 0 0;min-height:8px}
+.bar-wrap small{color:#fff;font-size:12px;text-align:center}
+.note{font-size:13px;color:#c5d8ee}
+@media(max-width:500px){main{margin:20px auto}.card{padding:16px}h1{font-size:25px}.chart{gap:5px;padding-left:0;padding-right:0}}
+</style>
+</head>
+<body>
+<header><a href="/dashboard">◆ AI LAND ANALYZER</a></header>
+<main>
+<h1>Land Price Charts</h1>
+<p>Compare sample land prices and calculate the price per square foot.</p>
+
+<section class="card">
+<h2>Enter Property Details</h2>
+<label for="location">Location</label>
+<input id="location" placeholder="e.g. Chembur">
+<label for="area">Land Area (sq ft)</label>
+<input id="area" type="number" min="1" placeholder="e.g. 1000">
+<label for="price">Expected Total Price (₹)</label>
+<input id="price" type="number" min="1" placeholder="e.g. 5000000">
+<button onclick="calculatePrice()">Calculate Price per Sq Ft</button>
+<h2 id="result">Your result will appear here</h2>
+</section>
+
+<section class="card">
+<h2>Illustrative Price Comparison</h2>
+<p class="note">These are sample values for demonstration, not verified local market prices.</p>
+<div class="chart" aria-label="Sample property price per square foot chart">
+<div class="bar-wrap"><small>₹4,000</small><div class="bar" style="height:40%"></div><small>Area A</small></div>
+<div class="bar-wrap"><small>₹5,500</small><div class="bar" style="height:55%"></div><small>Area B</small></div>
+<div class="bar-wrap"><small>₹7,000</small><div class="bar" style="height:70%"></div><small>Area C</small></div>
+<div class="bar-wrap"><small>₹9,000</small><div class="bar" style="height:90%"></div><small>Area D</small></div>
+</div>
+</section>
+<p class="note">Actual prices vary by location, land type, legal status and date. Verify with reliable local sources before making a purchase.</p>
+</main>
+<script>
+function calculatePrice(){
+ const location=document.getElementById('location').value.trim();
+ const area=Number(document.getElementById('area').value);
+ const price=Number(document.getElementById('price').value);
+ const result=document.getElementById('result');
+ if(!location||area<=0||price<=0||!Number.isFinite(area)||!Number.isFinite(price)){
+  result.textContent="Please enter a location, positive area and positive price.";
+  return;
+ }
+ result.textContent="₹"+(price/area).toLocaleString("en-IN",{maximumFractionDigits:2})+" per sq ft — "+location;
+}
+</script>
+</body>
+</html>

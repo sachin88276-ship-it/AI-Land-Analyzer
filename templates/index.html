@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Land Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #03152f;
+            color: white;
+        }
+
+        nav {
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: #16d9ff;
+        }
+
+        .hero {
+            min-height: 85vh;
+            padding: 70px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at top, #07549b 0%, transparent 65%),
+                linear-gradient(135deg, #03152f, #052c56);
+        }
+
+        .tag {
+            color: #20dcff;
+            letter-spacing: 3px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #18d9ff;
+        }
+
+        .description {
+            max-width: 620px;
+            color: #c6d9ef;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(90deg, #05c6f7, #0787ff);
+            padding: 15px 32px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8caacb;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo"><span>🌐</span> AI Land Analyzer</div>
+        <a class="btn" href="/login">Login</a>
+    </nav>
+
+    <main class="hero">
+        <p class="tag">SMART LAND ANALYSIS</p>
+
+        <h1>
+            Analyze Your Land<br>
+            <span>Smarter With AI</span>
+        </h1>
+
+        <p class="description">
+            Analyze land suitability, nearby facilities,
+            connectivity, risks and development signals.
+        </p>
+
+        <a class="btn" href="/analyzer">Analyze Your Land</a>
+    </main>
+
+    <footer>
+        AI Land Analyzer | Smart Property Insights
+    </footer>
+</body>
+</html>

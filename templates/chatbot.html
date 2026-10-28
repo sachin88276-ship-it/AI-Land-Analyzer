@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Property Assistant | AI Land Analyzer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #071426;
+            color: #eef6ff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #0c1d33;
+            border-bottom: 1px solid #1d3553;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+            color: #55d9ff;
+        }
+
+        .back-link {
+            color: #b9d6ee;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            color: #55d9ff;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        .heading {
+            margin-bottom: 20px;
+        }
+
+        .heading h1 {
+            margin-bottom: 8px;
+            font-size: 30px;
+        }
+
+        .heading p {
+            color: #a9bfd5;
+            line-height: 1.6;
+        }
+
+        .chat-card {
+            background: #0d2038;
+            border: 1px solid #24415f;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header {
+            padding: 17px 20px;
+            background: #112b47;
+            border-bottom: 1px solid #24415f;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #123e5b;
+            font-size: 23px;
+        }
+
+        .chat-header h2 {
+            margin: 0 0 5px;
+            font-size: 17px;
+        }
+
+        .status {
+            color: #65e5b0;
+            font-size: 12px;
+        }
+
+        .chat-messages {
+            height: 390px;
+            overflow-y: auto;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            max-width: 82%;
+            padding: 13px 15px;
+            border-radius: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 14px;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: #18334f;
+            border: 1px solid #294967;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user {
+            align-self: flex-end;
+            background: #087fa0;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 20px 18px;
+        }
+
+        .suggestion {
+            background: transparent;
+            border: 1px solid #315674;
+            color: #bfeeff;
+            padding: 9px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .suggestion:hover {
+            background: #153b56;
+        }
+
+        .chat-form {
+            padding: 16px;
+            border-top: 1px solid #24415f;
+            display: flex;
+            gap: 10px;
+            background: #0a192c;
+        }
+
+        #messageInput {
+            flex: 1;
+            min-width: 0;
+            padding: 14px;
+            color: white;
+            background: #10263e;
+            border: 1px solid #31516e;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        #messageInput:focus {
+            border-color: #42cfff;
+        }
+
+        #sendButton {
+            border: none;
+            border-radius: 12px;
+            padding: 0 22px;
+            background: #12b8d8;
+            color: #061526;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #sendButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .note {
+            padding: 0 18px 16px;
+            color: #91a9c1;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                margin: 20px auto;
+                padding: 0 10px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+
+            .chat-messages {
+                height: 55vh;
+                padding: 14px;
+            }
+
+            .message {
+                max-width: 92%;
+            }
+
+            .chat-form {
+                padding: 10px;
+            }
+
+            #sendButton {
+                padding: 0 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">🏡 AI Land Analyzer</div>
+        <a class="back-link" href="{{ url_for('dashboard') }}">
+            ← Back to Dashboard
+        </a>
+    </nav>
+
+    <main class="page">
+        <div class="heading">
+            <h1>🤖 AI Property Assistant</h1>
+            <p>
+                Ask questions about land, property prices, budgets,
+                location factors and property documents.
+            </p>
+        </div>
+
+        <section class="chat-card">
+            <div class="chat-header">
+                <div class="avatar">🏡</div>
+                <div>
+                    <h2>Land Analyzer AI</h2>
+                    <div class="status">● Property assistant</div>
+                </div>
+            </div>
+
+            <div
+                class="chat-messages"
+                id="chatMessages"
+                aria-live="polite"
+            >
+                <div class="message bot">
+                    Hello! Welcome to AI Land Analyzer.
+
+                    I can help with land prices, plot comparisons,
+                    budget planning and property-related questions.
+
+                    What would you like to know?
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <button class="suggestion" type="button"
+                    data-message="What factors affect land prices in Mumbai?">
+                    📍 Land prices
+                </button>
+
+                <button class="suggestion" type="button"
+                    data-message="How should I plan a budget for buying a plot?">
+                    💰 Budget planning
+                </button>
+
+                <button class="suggestion" type="button"
+                    data-message="What documents should I check before buying land in India?">
+                    📄 Land documents
+                </button>
+            </div>
+
+            <form class="chat-form" id="chatForm">
+                <input
+                    id="messageInput"
+                    type="text"
+                    placeholder="Ask about land or property..."
+                    autocomplete="off"
+                    maxlength="2000"
+                    required
+                >
+
+                <button id="sendButton" type="submit">
+                    Send ➤
+                </button>
+            </form>
+
+            <div class="note">
+                AI responses may not always be accurate. Verify property
+                prices, legal documents and ownership with reliable sources
+                and qualified professionals before making decisions.
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const chatMessages = document.getElementById("chatMessages");
+        const chatForm = document.getElementById("chatForm");
+        const messageInput = document.getElementById("messageInput");
+        const sendButton = document.getElementById("sendButton");
+
+        function addMessage(text, type) {
+            const message = document.createElement("div");
+            message.className = "message " + type;
+            message.textContent = text;
+            chatMessages.appendChild(message);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return message;
+        }
+
+        async function sendMessage(text) {
+            text = text.trim();
+
+            if (!text || sendButton.disabled) {
+                return;
+            }
+
+            addMessage(text, "user");
+            messageInput.value = "";
+            sendButton.disabled = true;
+            messageInput.disabled = true;
+
+            const loadingMessage = addMessage("Thinking...", "bot");
+
+            try {
+                const response = await fetch(
+                    "{{ url_for('chatbot_message') }}",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            message: text
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error || "Request failed. Please try again."
+                    );
+                }
+
+                loadingMessage.textContent =
+                    data.reply || "No reply received. Please try again.";
+
+            } catch (error) {
+                loadingMessage.textContent =
+                    "Sorry, an error occurred: " + error.message;
+            } finally {
+                sendButton.disabled = false;
+                messageInput.disabled = false;
+                messageInput.focus();
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        chatForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            sendMessage(messageInput.value);
+        });
+
+        document.querySelectorAll(".suggestion").forEach(function(button) {
+            button.addEventListener("click", function() {
+                sendMessage(button.dataset.message);
+            });
+        });
+    </script>
+</body>
+</html>

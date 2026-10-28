@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Analysis Result</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #071426;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px 7%;
+            background: #0c1d33;
+            border-bottom: 1px solid #1b4967;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: #38d9f5;
+            font-weight: bold;
+            font-size: 21px;
+        }
+
+        a {
+            color: #38d9f5;
+            text-decoration: none;
+        }
+
+        main {
+            width: min(900px, 92%);
+            margin: 40px auto;
+        }
+
+        h1 {
+            color: #38d9f5;
+            margin-bottom: 12px;
+            font-size: clamp(26px, 5vw, 36px);
+        }
+
+        .subtitle {
+            color: #b5c5d8;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: #0c1d33;
+            border: 1px solid #1b4967;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #38d9f5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .item {
+            background: #071426;
+            border: 1px solid #203d56;
+            padding: 16px;
+            border-radius: 9px;
+            overflow-wrap: anywhere;
+        }
+
+        .label {
+            color: #9fb3c9;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .notice {
+            color: #b5c5d8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 8px;
+            background: #25c7e8;
+            color: #071426;
+            font-weight: bold;
+        }
+
+        .secondary {
+            border: 1px solid #38d9f5;
+            color: #38d9f5;
+            background: transparent;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                margin: 28px auto;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">AI LAND ANALYZER</div>
+        <a href="/dashboard">← Dashboard</a>
+    </header>
+
+    <main>
+        <h1>Land Analysis Result</h1>
+        <p class="subtitle">
+            Your submitted property details are displayed below.
+        </p>
+
+        <section class="card">
+            <h2>Property Details</h2>
+
+            <div class="grid">
+                <div class="item">
+                    <div class="label">Land Location</div>
+                    <div class="value">{{ land.location }}</div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Land Area</div>
+                    <div class="value">{{ land.area }} {{ land.unit }}</div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Land Type</div>
+                    <div class="value">{{ land.land_type }}</div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Expected Price</div>
+                    <div class="value">
+                        {% if land.budget %}
+                            ₹{{ land.budget }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </div>
+                    
+<div class="item">
+    <div class="label">Price Per Square Foot</div>
+    <div class="value">
+        {% if land.price_per_sqft %}
+            ₹{{ land.price_per_sqft }}
+        {% else %}
+            Not available
+        {% endif %}
+    </div>
+</div>
+
+                </div>
+
+                <div class="item">
+                    <div class="label">Purpose</div>
+                    <div class="value">{{ land.purpose }}</div>
+                </div>
+
+                <div class="item">
+                    <div class="label">Additional Details</div>
+                    <div class="value">
+                        {% if land.details %}
+                            {{ land.details }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Analysis Status</h2>
+            <p class="notice">
+                Your property details have been received successfully.
+                AI-based price prediction, verified market comparisons,
+                and map integration are not connected yet.
+            </p>
+        </section>
+
+
+<section class="card">
+    <h2>Land Location Map</h2>
+
+    <p class="notice">
+        Map shows a search for your entered land location.
+        Please verify the exact property location.
+    </p>
+
+    <div style="margin-top: 18px; overflow: hidden; border-radius: 12px;">
+        
+<iframe
+    title="Land location map"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=72.80%2C18.90%2C73.05%2C19.20&layer=mapnik"
+    width="100%"
+    height="350"
+    style="border:0; display:block;"
+    loading="lazy">
+</iframe>
+
+    </div>
+
+    <p style="margin-top: 14px;">
+        <a
+            href="https://www.openstreetmap.org/search?query={{ land.location|urlencode }}"
+            target="_blank"
+            rel="noopener noreferrer">
+            Open location in OpenStreetMap →
+        </a>
+    </p>
+</section>
+
+<div class="buttons">
+    
+    <form action="{{ url_for('save_property') }}" method="POST">
+        <input type="hidden" name="location" value="{{ land.location }}">
+        <input type="hidden" name="area" value="{{ land.area }}">
+        <input type="hidden" name="unit" value="{{ land.unit }}">
+        <input type="hidden" name="land_type" value="{{ land.land_type }}">
+        <input type="hidden" name="budget" value="{{ land.budget }}">
+        <input type="hidden" name="purpose" value="{{ land.purpose }}">
+        <input type="hidden" name="details" value="{{ land.details }}">
+        <input type="hidden" name="price_per_sqft" value="{{ land.price_per_sqft or '' }}">
+
+        <button class="btn" type="submit">
+            💾 Save Property
+        </button>
+    </form>
+
+    <a class="btn" href="/report?location={{ land.location|urlencode }}&area={{ land.area|urlencode }}&unit={{ land.unit|urlencode }}&land_type={{ land.land_type|urlencode }}&budget={{ land.budget|urlencode }}&purpose={{ land.purpose|urlencode }}&details={{ land.details|urlencode }}">
+        View AI Analysis Report →
+    </a>
+
+    <a class="btn" href="/analyzer">Analyze Another Property</a>
+
+    <a class="btn secondary" href="/dashboard">Back to Dashboard</a>
+</div>
+

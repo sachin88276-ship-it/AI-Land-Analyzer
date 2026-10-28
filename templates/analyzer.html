@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Land Analyzer - Land Details</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #071426;
+            color: white;
+        }
+        header {
+            background: #0c1d33;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #1b4967;
+        }
+        .logo { color: #38d9f5; font-weight: bold; }
+        a { color: #38d9f5; text-decoration: none; }
+        main { width: min(800px, 92%); margin: 40px auto; }
+        h1 { color: #38d9f5; }
+        p { color: #b5c5d8; line-height: 1.6; }
+        form {
+            background: #0c1d33;
+            border: 1px solid #1b4967;
+            border-radius: 14px;
+            padding: 25px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+        .field { display: flex; flex-direction: column; gap: 8px; }
+        .full { grid-column: 1 / -1; }
+        label { font-size: 14px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #29465f;
+            border-radius: 8px;
+            background: #071426;
+            color: white;
+        }
+        textarea { min-height: 85px; }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 24px;
+            border: 0;
+            border-radius: 8px;
+            background: #25c7e8;
+            color: #071426;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+            .full { grid-column: auto; }
+            form { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">AI LAND ANALYZER</div>
+        <a href="/dashboard">← Back to Dashboard</a>
+    </header>
+
+    <main>
+        <h1>Land Details Analyzer</h1>
+        <p>Enter your property details to begin your land analysis.</p>
+
+        <form action="/analyze" method="POST">
+            <div class="grid">
+                <div class="field">
+                    <label for="location">Land Location *</label>
+                    <input id="location" name="location"
+                           placeholder="e.g. Chembur, Mumbai" required>
+                </div>
+
+                <div class="field">
+                    <label for="area">Land Area *</label>
+                    <input id="area" name="area" type="number"
+                           min="1" step="any" required>
+                </div>
+
+                <div class="field">
+                    <label for="unit">Area Unit *</label>
+                    <select id="unit" name="unit" required>
+                        <option value="sqft">Square Feet</option>
+                        <option value="sqm">Square Metres</option>
+                        <option value="acre">Acres</option>
+                        <option value="guntha">Guntha</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="land_type">Land Type *</label>
+                    <select id="land_type" name="land_type" required>
+                        <option value="">Select type</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Agricultural">Agricultural</option>
+                        <option value="Industrial">Industrial</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="budget">Expected Price (₹)</label>
+                    <input id="budget" name="budget" type="number"
+                           min="0" step="any" placeholder="Enter price">
+                </div>
+
+                <div class="field">
+                    <label for="purpose">Purpose *</label>
+                    <select id="purpose" name="purpose" required>
+                        <option value="">Select purpose</option>
+                        <option value="Buy">Buy Land</option>
+                        <option value="Sell">Sell Land</option>
+                        <option value="Investment">Investment</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="details">Additional Details</label>
+                    <textarea id="details" name="details"
+                              placeholder="Road access, nearby facilities, etc."></textarea>
+                </div>
+            </div>
+
+            <button type="submit">Analyze Land →</button>
+        </form>
+    </main>
+</body>
+</html>

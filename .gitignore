@@ -1,0 +1,6 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+land_records.db
